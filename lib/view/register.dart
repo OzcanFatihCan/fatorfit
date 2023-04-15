@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import '../services/auth_service.dart';
 import '../theme/themecolor.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -16,7 +19,8 @@ enum GenderSelection {
 
 class _RegisterPageState extends State<RegisterPage> {
   GenderSelection _selection = GenderSelection.female;
-
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,35 +31,22 @@ class _RegisterPageState extends State<RegisterPage> {
             fit: BoxFit.cover),
       ),
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.transparent,
-        body: Stack(
+        body: ListView(
+          padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.40,
+              left: 38,
+              right: 38),
           children: [
-            SingleChildScrollView(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.37,
-                  left: 38,
-                  right: 38),
-              child: Column(
-                children: [
-                  buildRegisterText(),
-                  const SizedBox(height: 5),
-                  buildRegisterAccountId(),
-                  const SizedBox(height: 15),
-                  buildRegisterPassword(),
-                  const SizedBox(height: 15),
-                  buildRegisterHeight(),
-                  const SizedBox(height: 15),
-                  buildRegisterWeight(),
-                  const SizedBox(height: 15),
-                  buildRegisterAge(),
-                  const SizedBox(height: 15),
-                  buildRegisterGender(),
-                  const SizedBox(height: 5),
-                  buildRegister(),
-                  const SizedBox(height: 10)
-                ],
-              ),
-            )
+            buildRegisterText(),
+            const SizedBox(height: 5),
+            buildRegisterAccountId(_emailController),
+            const SizedBox(height: 15),
+            buildRegisterPassword(_passwordController),
+            const SizedBox(height: 15),
+            buildRegister(context, _emailController, _passwordController),
+            const SizedBox(height: 10),
           ],
         ),
       ),
@@ -129,8 +120,9 @@ buildRegisterText() {
   );
 }
 
-buildRegisterAccountId() {
+buildRegisterAccountId(emailController) {
   return TextField(
+    controller: emailController,
     decoration: InputDecoration(
         fillColor: AppColors.textFieldColor,
         filled: true,
@@ -141,8 +133,9 @@ buildRegisterAccountId() {
   );
 }
 
-buildRegisterPassword() {
+buildRegisterPassword(passwordController) {
   return TextField(
+    controller: passwordController,
     obscureText: true,
     decoration: InputDecoration(
         fillColor: AppColors.textFieldColor,
@@ -154,8 +147,12 @@ buildRegisterPassword() {
   );
 }
 
+//numerik kısım eklenecek
 buildRegisterHeight() {
-  return TextField(
+  return TextFormField(
+    inputFormatters: <TextInputFormatter>[
+      FilteringTextInputFormatter.digitsOnly,
+    ],
     decoration: InputDecoration(
         fillColor: AppColors.textFieldColor,
         filled: true,
@@ -190,7 +187,12 @@ buildRegisterAge() {
   );
 }
 
-buildRegister() {
+buildRegister(
+  BuildContext context,
+  emailController,
+  passwordController,
+) {
+  final authService = Provider.of<AuthService>(context);
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -206,7 +208,13 @@ buildRegister() {
         backgroundColor: const Color(0xff4c505b),
         child: IconButton(
           //FIREBASE KISMI
-          onPressed: () => {},
+          onPressed: () async {
+            await authService.createUserWithEmailAndPassword(
+              emailController.text,
+              passwordController.text,
+            );
+            Navigator.pop(context);
+          },
           //icon androidde gözükmüyorsa sondaki '_ios' kısmını silin.
           icon: const Icon(Icons.arrow_forward_ios),
           color: Colors.white,

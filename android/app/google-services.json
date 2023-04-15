@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "48331029178",
+    "project_id": "fatorfit",
+    "storage_bucket": "fatorfit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48331029178:android:8022a2a658672d06e52083",
+        "android_client_info": {
+          "package_name": "com.example.fatorfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48331029178-ie0r5p51e7jrniem4ci96vqhl9hcfils.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAQtRVrulYbIg4szTL47h4nuquDXD4td0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48331029178-ie0r5p51e7jrniem4ci96vqhl9hcfils.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static final Color textFiedlColor = Colors.grey.shade100;
+  static final Color textFieldColor = Colors.grey.shade100;
 }

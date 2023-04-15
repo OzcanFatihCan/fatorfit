@@ -1,5 +1,7 @@
+import 'package:fatorfit/services/auth_service.dart';
 import 'package:fatorfit/theme/themecolor.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,50 +11,52 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            //assets klasorunden arka plana aktarma alanı
-            image: AssetImage('assets/login.png'),
-            fit: BoxFit.cover),
+          image: AssetImage('assets/login.png'),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
             buildLogo(),
-            buildScrollView(context),
+            SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.5,
+                  left: 38,
+                  right: 38,
+                ),
+                child: Column(
+                  children: [
+                    buildAccountId(_emailController),
+                    const SizedBox(height: 30),
+                    buildAccountPassword(_passwordController),
+                    const SizedBox(height: 30),
+                    buildSignIntoFF(
+                      context,
+                      _emailController,
+                      _passwordController,
+                    ),
+                    const SizedBox(height: 30),
+                    buildSignUp(context),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-}
-
-//scrollview
-buildScrollView(BuildContext context) {
-  return SingleChildScrollView(
-    child: Container(
-      padding: EdgeInsets.only(
-        top: MediaQuery.of(context).size.height * 0.5,
-        left: 38,
-        right: 38,
-      ),
-      child: Column(
-        children: [
-          buildAccountId(),
-          const SizedBox(height: 30),
-          buildAccountPassword(),
-          const SizedBox(height: 30),
-          buildSignIntoFF(),
-          const SizedBox(height: 30),
-          buildSignUp(context),
-        ],
-      ),
-    ),
-  );
 }
 
 //logo
@@ -71,8 +75,9 @@ buildLogo() {
 }
 
 //kullanıcı adı veya email giriş
-buildAccountId() {
+buildAccountId(emailController) {
   return TextField(
+    controller: emailController,
     decoration: InputDecoration(
       fillColor: AppColors.textFieldColor,
       filled: true,
@@ -85,8 +90,9 @@ buildAccountId() {
 }
 
 //parola giriş
-buildAccountPassword() {
+buildAccountPassword(passwordController) {
   return TextField(
+    controller: passwordController,
     obscureText: true,
     decoration: InputDecoration(
       fillColor: AppColors.textFieldColor,
@@ -100,7 +106,15 @@ buildAccountPassword() {
 }
 
 //giriş yap
-buildSignIntoFF() {
+buildSignIntoFF(
+  BuildContext context,
+  emailController,
+  passwordController,
+) {
+  final authService = Provider.of<AuthService>(context);
+  /*String _authError = authService.isError;
+  String _authErrorMessage = authService.errorMessage;*/
+
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
@@ -116,7 +130,27 @@ buildSignIntoFF() {
         backgroundColor: const Color(0xff4c505b),
         child: IconButton(
           //FIREBASE KISMI
-          onPressed: () => {},
+          onPressed: () async {
+            await authService.signInWithEmailAndPassword(
+              emailController.text,
+              passwordController.text,
+            );
+
+            //snackbar için işlem yapılacak
+            /*if (_authError == "user-not-found") {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(_authErrorMessage),
+                ),
+              );
+            } else if (authService == "wrong-password") {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(_authErrorMessage),
+                ),
+              );
+            }*/
+          },
           //icon androidde gözükmüyorsa sondaki '_ios' kısmını silin.
           icon: const Icon(Icons.arrow_forward_ios),
           color: Colors.white,
@@ -141,16 +175,18 @@ buildSignUp(BuildContext context) {
               color: Color.fromRGBO(89, 191, 231, 1)),
         ),
       ),
-      TextButton(
-        onPressed: () => {
-          Navigator.pushNamed(context, 'register'),
-        },
-        child: const Text(
-          "Hesap Oluştur",
-          style: TextStyle(
-            decoration: TextDecoration.underline,
-            fontSize: 15,
-            color: Color.fromRGBO(89, 191, 231, 1),
+      Center(
+        child: TextButton(
+          onPressed: () => {
+            Navigator.pushNamed(context, 'register'),
+          },
+          child: const Text(
+            "Hesap Oluştur",
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              fontSize: 15,
+              color: Color.fromRGBO(89, 191, 231, 1),
+            ),
           ),
         ),
       ),
