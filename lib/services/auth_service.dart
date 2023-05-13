@@ -1,19 +1,13 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../models/user_model.dart';
 
 class AuthService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
-
-  /* snackbar için kontrol edilecek
-  String _isError = "";
-  String _errorMessage = "";
-
-  //diğer sayfalardan çağırma fonksiyonu
-  String get isError => _isError;
-  String get errorMessage => _errorMessage;
-  */
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   AppUser? _userFromFirebase(auth.User? user) {
     if (user == null) {
@@ -35,16 +29,10 @@ class AuthService {
         email: email,
         password: password,
       );
-
       //giriş başarılı
     } on FirebaseAuthException catch (e) {
       //giriş hatalı
-
-      if (e.code == 'user-not-found') {
-        print("Kullanıcı bulunamadı");
-      } else if (e.code == 'wrong-password') {
-        print("Hatalı şifre girişi");
-      }
+      print(e.code);
     }
   }
 
@@ -61,5 +49,42 @@ class AuthService {
 
   Future<void> signOut() async {
     return await _firebaseAuth.signOut();
+  }
+
+  Future<AppUser?> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+      if (gUser != null) {
+        final GoogleSignInAuthentication gAuth = await gUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: gAuth.accessToken,
+          idToken: gAuth.idToken,
+        );
+        await FirebaseAuth.instance.signInWithCredential(credential);
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      throw e;
+    }
+  }
+
+  Future<void> signOutWithGoogle() async {
+    await _googleSignIn.signOut();
+  }
+
+  static String getErrorMessageFromException(dynamic error) {
+    String errorMsg = '';
+    switch (error.code) {
+      case 'user-not-found':
+        errorMsg = 'Kullanıcı bulunamadı';
+        break;
+      case 'wrong-password':
+        errorMsg = 'Yanlış parola';
+        break;
+      default:
+        errorMsg = 'Giriş yaparken bir hata oluştu';
+        break;
+    }
+    return errorMsg;
   }
 }

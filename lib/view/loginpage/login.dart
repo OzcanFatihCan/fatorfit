@@ -1,5 +1,6 @@
 import 'package:fatorfit/services/auth_service.dart';
 import 'package:fatorfit/theme/themecolor.dart';
+import 'package:fatorfit/view/loginpage/alternativeLogin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,14 +41,16 @@ class _LoginPageState extends State<LoginPage> {
                     buildAccountId(_emailController),
                     const SizedBox(height: 30),
                     buildAccountPassword(_passwordController),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 15),
                     buildSignIntoFF(
                       context,
                       _emailController,
                       _passwordController,
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 15),
                     buildSignUp(context),
+                    const SizedBox(height: 15),
+                    buildAlternativeSignUp(context),
                   ],
                 ),
               ),
@@ -70,6 +73,42 @@ buildLogo() {
         width: 150,
         height: 150,
       ),
+    ),
+  );
+}
+
+buildAlternativeSignUp(BuildContext context) {
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+          initialChildSize: 0.3,
+          maxChildSize: 0.5,
+          minChildSize: 0.28,
+          expand: false,
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: AlternativeSignUp(),
+            );
+          }),
+    );
+  }
+
+  return TextButton(
+    onPressed: () => _showModalBottomSheet(context),
+    child: const Text(
+      "Alternatif Giriş Yöntemi",
+      style: TextStyle(
+          decoration: TextDecoration.underline,
+          fontSize: 15,
+          color: Color.fromRGBO(89, 191, 231, 1)),
     ),
   );
 }
@@ -112,8 +151,6 @@ buildSignIntoFF(
   passwordController,
 ) {
   final authService = Provider.of<AuthService>(context);
-  /*String _authError = authService.isError;
-  String _authErrorMessage = authService.errorMessage;*/
 
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -135,21 +172,6 @@ buildSignIntoFF(
               emailController.text,
               passwordController.text,
             );
-
-            //snackbar için işlem yapılacak
-            /*if (_authError == "user-not-found") {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(_authErrorMessage),
-                ),
-              );
-            } else if (authService == "wrong-password") {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(_authErrorMessage),
-                ),
-              );
-            }*/
           },
           //icon androidde gözükmüyorsa sondaki '_ios' kısmını silin.
           icon: const Icon(Icons.arrow_forward_ios),

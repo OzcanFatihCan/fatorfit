@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '48331029178',
     projectId: 'fatorfit',
     authDomain: 'fatorfit.firebaseapp.com',
+    databaseURL: 'https://fatorfit-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'fatorfit.appspot.com',
   );
 
@@ -57,6 +58,7 @@ class DefaultFirebaseOptions {
     appId: '1:48331029178:android:8022a2a658672d06e52083',
     messagingSenderId: '48331029178',
     projectId: 'fatorfit',
+    databaseURL: 'https://fatorfit-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'fatorfit.appspot.com',
   );
 
@@ -65,7 +67,9 @@ class DefaultFirebaseOptions {
     appId: '1:48331029178:ios:47bc3d44875419b8e52083',
     messagingSenderId: '48331029178',
     projectId: 'fatorfit',
+    databaseURL: 'https://fatorfit-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'fatorfit.appspot.com',
+    androidClientId: '48331029178-f4s6jhn4q3jknnca2vl3eo8og7polsm5.apps.googleusercontent.com',
     iosClientId: '48331029178-anc0hbumkvvt5103gq5rasmc5eb15a5n.apps.googleusercontent.com',
     iosBundleId: 'com.example.fatorfit',
   );
@@ -75,7 +79,9 @@ class DefaultFirebaseOptions {
     appId: '1:48331029178:ios:47bc3d44875419b8e52083',
     messagingSenderId: '48331029178',
     projectId: 'fatorfit',
+    databaseURL: 'https://fatorfit-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'fatorfit.appspot.com',
+    androidClientId: '48331029178-f4s6jhn4q3jknnca2vl3eo8og7polsm5.apps.googleusercontent.com',
     iosClientId: '48331029178-anc0hbumkvvt5103gq5rasmc5eb15a5n.apps.googleusercontent.com',
     iosBundleId: 'com.example.fatorfit',
   );

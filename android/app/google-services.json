@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "48331029178",
+    "firebase_url": "https://fatorfit-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "fatorfit",
     "storage_bucket": "fatorfit.appspot.com"
   },
@@ -14,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "48331029178-ie0r5p51e7jrniem4ci96vqhl9hcfils.apps.googleusercontent.com",
+          "client_id": "48331029178-f4s6jhn4q3jknnca2vl3eo8og7polsm5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fatorfit",
+            "certificate_hash": "c5d80b65ad7a84dc879b270e64221579ab8f39b2"
+          }
+        },
+        {
+          "client_id": "48331029178-qsbc691t2gmnqc8acrvr6tafogpgrb8h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -29,6 +38,13 @@
             {
               "client_id": "48331029178-ie0r5p51e7jrniem4ci96vqhl9hcfils.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "48331029178-anc0hbumkvvt5103gq5rasmc5eb15a5n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fatorfit"
+              }
             }
           ]
         }

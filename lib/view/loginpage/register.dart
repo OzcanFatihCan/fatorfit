@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../services/auth_service.dart';
-import '../theme/themecolor.dart';
+import '../../services/auth_service.dart';
+import '../../theme/themecolor.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -39,13 +39,13 @@ class _RegisterPageState extends State<RegisterPage> {
               left: 38,
               right: 38),
           children: [
-            buildRegisterText(),
+            _buildRegisterText(),
             const SizedBox(height: 5),
-            buildRegisterAccountId(_emailController),
+            _buildRegisterAccountId(_emailController),
             const SizedBox(height: 15),
-            buildRegisterPassword(_passwordController),
+            _buildRegisterPassword(_passwordController),
             const SizedBox(height: 15),
-            buildRegister(context, _emailController, _passwordController),
+            _buildRegister(context, _emailController, _passwordController),
             const SizedBox(height: 10),
           ],
         ),
@@ -53,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  buildRegisterGender() {
+  _buildRegisterGender() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -109,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 }
 
-buildRegisterText() {
+_buildRegisterText() {
   return const Text(
     "Hesap Oluştur",
     style: TextStyle(
@@ -120,20 +120,20 @@ buildRegisterText() {
   );
 }
 
-buildRegisterAccountId(emailController) {
+_buildRegisterAccountId(emailController) {
   return TextField(
     controller: emailController,
     decoration: InputDecoration(
         fillColor: AppColors.textFieldColor,
         filled: true,
-        hintText: 'Kullanıcı Adı veya E-Mail',
+        hintText: 'E-Mail',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
         )),
   );
 }
 
-buildRegisterPassword(passwordController) {
+_buildRegisterPassword(passwordController) {
   return TextField(
     controller: passwordController,
     obscureText: true,
@@ -147,47 +147,7 @@ buildRegisterPassword(passwordController) {
   );
 }
 
-//numerik kısım eklenecek
-buildRegisterHeight() {
-  return TextFormField(
-    inputFormatters: <TextInputFormatter>[
-      FilteringTextInputFormatter.digitsOnly,
-    ],
-    decoration: InputDecoration(
-        fillColor: AppColors.textFieldColor,
-        filled: true,
-        hintText: 'Boyunuz',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        )),
-  );
-}
-
-buildRegisterWeight() {
-  return TextField(
-    decoration: InputDecoration(
-        fillColor: AppColors.textFieldColor,
-        filled: true,
-        hintText: 'Kilonuz',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        )),
-  );
-}
-
-buildRegisterAge() {
-  return TextField(
-    decoration: InputDecoration(
-        fillColor: AppColors.textFieldColor,
-        filled: true,
-        hintText: 'Yaşınız',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        )),
-  );
-}
-
-buildRegister(
+_buildRegister(
   BuildContext context,
   emailController,
   passwordController,
