@@ -26,36 +26,12 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
   final _ageController = TextEditingController();
 
   @override
-  void dispose() {
-    _userController.clear();
-    _userController.dispose();
-    _heightController.clear;
-    _heightController.dispose();
-    _weightController.clear();
-    _weightController.dispose();
-    _ageController.clear();
-    _ageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: AlignmentDirectional.topCenter,
       clipBehavior: Clip.none,
       children: [
         const SizedBox(height: 10),
-        TextButton(
-          onPressed: () async {},
-          child: const Text(
-            "Profil",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(1000, 58, 67, 76),
-            ),
-          ),
-        ),
         Positioned(
           top: -15,
           child: Container(
@@ -68,25 +44,39 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
             ),
           ),
         ),
-        Container(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.10,
-              left: 38,
-              right: 38),
-          child: Column(children: [
-            _buildName(_userController),
-            const SizedBox(height: 15),
-            _buildHeight(_heightController),
-            const SizedBox(height: 15),
-            _buildWeight(_weightController),
-            const SizedBox(height: 15),
-            _buildAge(_ageController),
-            const SizedBox(height: 15),
-            _buildGender(),
-            const SizedBox(height: 15),
-            _buildSaveButton(context, _ageController, _userController,
-                _heightController, _weightController, _selection)
-          ]),
+        SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.05,
+                left: 38,
+                right: 38),
+            child: Column(children: [
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Profile Hoşgeldiniz",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 40),
+              _buildName(_userController),
+              const SizedBox(height: 15),
+              _buildHeight(_heightController),
+              const SizedBox(height: 15),
+              _buildWeight(_weightController),
+              const SizedBox(height: 15),
+              _buildAge(_ageController),
+              const SizedBox(height: 15),
+              _buildGender(),
+              const SizedBox(height: 15),
+              _buildSaveButton(context, _ageController, _userController,
+                  _heightController, _weightController, _selection)
+            ]),
+          ),
         )
       ],
     );
@@ -94,23 +84,22 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
 
   _buildGender() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
         const Text(
           "Cinsiyet:",
           style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-              color: Color.fromARGB(255, 87, 107, 161)),
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         Expanded(
+          flex: 1,
           child: RadioListTile<GenderSelection>(
             title: const Text(
               'Kadın',
               style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w600,
-                color: Color(0xff4c505b),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
             activeColor: Colors.black,
@@ -124,13 +113,14 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
           ),
         ),
         Expanded(
+          flex: 1,
           child: RadioListTile<GenderSelection>(
             title: const Text(
               'Erkek',
               style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w600,
-                color: Color(0xff4c505b),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
             activeColor: Colors.black,
@@ -144,6 +134,75 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
           ),
         ),
       ],
+    );
+  }
+
+  _buildSaveButton(
+    BuildContext context,
+    TextEditingController _ageController,
+    TextEditingController _userController,
+    TextEditingController _heightController,
+    TextEditingController _weightController,
+    GenderSelection _selection,
+  ) {
+    final authService = Provider.of<AuthService>(context);
+    final mystream = authService.user;
+    final age = _ageController.text;
+    final name = _userController.text;
+    final height = _heightController.text;
+    final weight = _weightController.text;
+    final gender = _selection == GenderSelection.male ? "erkek" : "kadın";
+
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.black87,
+            child: IconButton(
+              onPressed: () async {
+                mystream?.listen(
+                  (user) async {
+                    if (user != null) {
+                      final uid = user.userId;
+                      final email = user.userMail;
+                      final FirebaseRealtimeDatabase db =
+                          FirebaseRealtimeDatabase(uid);
+                      await db.saveUserInfo(
+                        name,
+                        gender,
+                        int.parse(height),
+                        int.parse(weight),
+                        int.parse(age),
+                        email!,
+                      );
+                    }
+                  },
+                );
+              },
+              icon: const Icon(
+                Icons.save,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          SizedBox(width: 20),
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.black87,
+            child: IconButton(
+              onPressed: () async {
+                await Navigator.pushNamed(context, "profile");
+              },
+              icon: const Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -201,65 +260,5 @@ _buildAge(ageController) {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
         )),
-  );
-}
-
-_buildSaveButton(BuildContext context, _ageController, _userController,
-    _heightController, _weightController, _selection) {
-  final authService = Provider.of<AuthService>(context);
-  final mystream = authService.user;
-  final age = _ageController.text;
-  final name = _userController.text;
-  final height = _heightController.text;
-  final weight = _weightController.text;
-  final gender = _selection == GenderSelection.male ? "erkek" : "kadın";
-
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      //kaydetme
-      CircleAvatar(
-        radius: 25,
-        backgroundColor: AppColors.bottomNavBarColor,
-        child: IconButton(
-          onPressed: () async {
-            mystream?.listen(
-              (user) async {
-                if (user != null) {
-                  final uid = user.userId;
-                  final email = user.userMail;
-                  final FirebaseRealtimeDatabase db =
-                      FirebaseRealtimeDatabase(uid);
-                  await db.saveUserInfo(
-                    name,
-                    gender,
-                    int.parse(height),
-                    int.parse(weight),
-                    int.parse(age),
-                    email!,
-                    uid,
-                  );
-                }
-              },
-            );
-          },
-          icon: const Icon(Icons.save),
-          color: Colors.white,
-        ),
-      ),
-      const SizedBox(width: 25),
-      //profil
-      CircleAvatar(
-        radius: 25,
-        backgroundColor: AppColors.bottomNavBarColor,
-        child: IconButton(
-          onPressed: () async {
-            await Navigator.pushNamed(context, "profile");
-          },
-          icon: const Icon(Icons.person),
-          color: Colors.white,
-        ),
-      ),
-    ],
   );
 }

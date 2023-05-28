@@ -26,36 +26,36 @@ class AlternativeSignUp extends StatelessWidget {
             ),
           ),
         ),
-        Column(children: [
-          const SizedBox(
-            height: 30,
-          ),
-          const Center(
-            child: Text(
-              "Alternatif Giriş Yöntemi",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(1000, 58, 67, 76),
+        Column(
+          children: [
+            const SizedBox(
+              height: 30,
+            ),
+            const Center(
+              child: Text(
+                "Alternatif Giriş Yöntemi",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(1000, 58, 67, 76),
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          SignInButton(
-            buttonType: ButtonType.google,
-            btnText: "Google ile giriş yap",
-            buttonSize: ButtonSize.large,
-            onPressed: () async {
-              await authService.signInWithGoogle();
-              Navigator.pop(context);
-            },
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-        ])
+            const SizedBox(height: 40),
+            SignInButton(
+              buttonType: ButtonType.google,
+              btnText: "Google ile giriş yap",
+              buttonSize: ButtonSize.large,
+              onPressed: () async {
+                await authService.signInWithGoogle();
+                Navigator.pop(context);
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        )
       ],
     );
   }

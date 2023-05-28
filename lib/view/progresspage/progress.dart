@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 
-class GelisimPage extends StatefulWidget {
-  const GelisimPage({super.key});
+class ProgressPage extends StatefulWidget {
+  const ProgressPage({super.key});
 
   @override
-  State<GelisimPage> createState() => _GelisimPageState();
+  State<ProgressPage> createState() => _ProgressPageState();
 }
 
-class _GelisimPageState extends State<GelisimPage> {
+class _ProgressPageState extends State<ProgressPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/background.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: const Scaffold(
+        backgroundColor: Colors.transparent,
+      ),
+    );
   }
 }

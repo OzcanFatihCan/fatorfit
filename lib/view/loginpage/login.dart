@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
 //logo
 buildLogo() {
   return Container(
-    padding: const EdgeInsets.only(left: 130, top: 40),
+    padding: const EdgeInsets.only(left: 125, top: 40, right: 125),
     child: ClipRRect(
       borderRadius: BorderRadius.circular(200),
       child: Image.asset(
@@ -83,21 +83,23 @@ buildAlternativeSignUp(BuildContext context) {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
+        side: BorderSide(color: Colors.black),
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(30),
         ),
       ),
       builder: (context) => DraggableScrollableSheet(
-          initialChildSize: 0.3,
-          maxChildSize: 0.5,
-          minChildSize: 0.28,
-          expand: false,
-          builder: (context, scrollController) {
-            return SingleChildScrollView(
-              controller: scrollController,
-              child: AlternativeSignUp(),
-            );
-          }),
+        initialChildSize: 0.3,
+        maxChildSize: 0.5,
+        minChildSize: 0.28,
+        expand: false,
+        builder: (context, scrollController) {
+          return SingleChildScrollView(
+            controller: scrollController,
+            child: const AlternativeSignUp(),
+          );
+        },
+      ),
     );
   }
 
@@ -106,9 +108,10 @@ buildAlternativeSignUp(BuildContext context) {
     child: const Text(
       "Alternatif Giriş Yöntemi",
       style: TextStyle(
-          decoration: TextDecoration.underline,
-          fontSize: 15,
-          color: Color.fromRGBO(89, 191, 231, 1)),
+        decoration: TextDecoration.underline,
+        fontSize: 15,
+        color: Color.fromRGBO(89, 191, 231, 1),
+      ),
     ),
   );
 }
@@ -158,9 +161,10 @@ buildSignIntoFF(
       const Text(
         "Giriş Yap",
         style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w500,
-            color: Color(0xff4c505b)),
+          fontSize: 25,
+          fontWeight: FontWeight.w500,
+          color: Color(0xff4c505b),
+        ),
       ),
       CircleAvatar(
         radius: 30,
@@ -192,9 +196,10 @@ buildSignUp(BuildContext context) {
         child: const Text(
           "Şifremi Unuttum",
           style: TextStyle(
-              decoration: TextDecoration.underline,
-              fontSize: 15,
-              color: Color.fromRGBO(89, 191, 231, 1)),
+            decoration: TextDecoration.underline,
+            fontSize: 15,
+            color: Color.fromRGBO(89, 191, 231, 1),
+          ),
         ),
       ),
       Center(

@@ -12,7 +12,6 @@ class UserModel {
   String? age;
   String? gender;
   String? email;
-  String? uid;
 
   UserModel({
     this.name,
@@ -21,18 +20,16 @@ class UserModel {
     this.age,
     this.gender,
     this.email,
-    this.uid,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       name: json['fullName'] as String?,
-      height: json['height'].toString(),
-      weight: json['weight'].toString(),
-      age: json['age'].toString(),
+      height: json['height']?.toString(),
+      weight: json['weight']?.toString(),
+      age: json['age']?.toString(),
       gender: json['gender'] as String?,
       email: json['email'] as String?,
-      uid: json['uid'] as String?,
     );
   }
 }

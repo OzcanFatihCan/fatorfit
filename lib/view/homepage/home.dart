@@ -33,8 +33,11 @@ class _HomePageState extends State<HomePage> {
           theWidth: 200.0,
           theHeight: 200.0,
           theChild: Text(
-            'Aktivite',
-            style: TextStyle(color: AppColors.textHome, fontSize: 30.0),
+            'AKTIVITE',
+            style: TextStyle(
+                color: AppColors.textHome,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -43,8 +46,11 @@ class _HomePageState extends State<HomePage> {
           theWidth: 200.0,
           theHeight: 200.0,
           theChild: Text(
-            'Diyet',
-            style: TextStyle(color: AppColors.textHome, fontSize: 30.0),
+            'DIYET',
+            style: TextStyle(
+                color: AppColors.textHome,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -53,8 +59,11 @@ class _HomePageState extends State<HomePage> {
           theWidth: 200.0,
           theHeight: 200.0,
           theChild: Text(
-            'Gelişim',
-            style: TextStyle(color: AppColors.textHome, fontSize: 30.0),
+            'GELISIM',
+            style: TextStyle(
+                color: AppColors.textHome,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -62,7 +71,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/background.png'),
+          image: AssetImage('assets/background.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -84,11 +93,11 @@ class _HomePageState extends State<HomePage> {
                     },
                     onSelectedItem: (index) async {
                       if (index == 0) {
-                        await Navigator.pushNamed(context, "aktivite");
+                        await Navigator.pushNamed(context, "aktivity");
                       } else if (index == 1) {
-                        await Navigator.pushNamed(context, "diyet");
+                        await Navigator.pushNamed(context, "diet");
                       } else {
-                        await Navigator.pushNamed(context, "gelisim");
+                        await Navigator.pushNamed(context, "progress");
                       }
                     },
                     initialPage: 1, // optional
@@ -111,6 +120,7 @@ class _HomePageState extends State<HomePage> {
         context: context,
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
+          side: BorderSide(color: Colors.black),
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(30),
           ),

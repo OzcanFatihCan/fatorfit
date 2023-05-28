@@ -44,15 +44,15 @@ class FrostedGlassBox extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 border:
-                    Border.all(color: Colors.grey.shade800.withOpacity(0.56)),
+                    Border.all(color: Colors.grey.shade800.withOpacity(0.0)),
                 gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
                       //begin color
-                      Colors.blueGrey.withOpacity(0.15),
+                      const Color.fromARGB(255, 27, 63, 82).withOpacity(0.15),
                       //end color
-                      Colors.blueGrey.withOpacity(0.05),
+                      const Color.fromARGB(255, 27, 63, 82).withOpacity(0.05),
                     ]),
               ),
             ),

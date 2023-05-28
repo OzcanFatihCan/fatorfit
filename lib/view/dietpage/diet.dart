@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 
-class DiyetPage extends StatefulWidget {
-  const DiyetPage({super.key});
+class DietPage extends StatefulWidget {
+  const DietPage({super.key});
 
   @override
-  State<DiyetPage> createState() => _DiyetPageState();
+  State<DietPage> createState() => _DietPageState();
 }
 
-class _DiyetPageState extends State<DiyetPage> {
+class _DietPageState extends State<DietPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/background.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+      ),
+    );
   }
 }

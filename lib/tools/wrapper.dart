@@ -30,20 +30,18 @@ class Wrapper extends StatelessWidget {
             // Kullanıcı giriş yapmadı, LoginPage açılacak
             return const LoginPage();
           } else {
-            // Kullanıcı giriş yaptı, HomePage açılacak
-            /*Future.delayed(const Duration(milliseconds: 50), () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Giriş başarılı!'),
-                ),
-              );
-            });*/
-
+            // Giriş başarılı HomePage, açılacak.
             return const HomePage();
           }
-        }
-        if (snapshot.hasError) {
+        } else if (snapshot.hasError) {
           // Giriş yaparken bir hata oluştu
+          Future.delayed(const Duration(milliseconds: 50), () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Bilgilerinizi kontrol ediniz.'),
+              ),
+            );
+          });
         }
         return const Scaffold(
           body: Center(

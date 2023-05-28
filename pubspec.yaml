@@ -38,10 +38,13 @@ dependencies:
   sign_button: ^2.0.3
   google_sign_in: ^6.1.0
   firebase_database: ^10.1.1
+  cloud_firestore: ^4.7.1
+  firebase_storage: ^11.2.1
   flutter_icons: ^1.1.0
   curved_navigation_bar: ^1.0.3
   sliding_up_panel2: ^3.3.0+1
   sliding_up_panel: ^2.0.0+1
+  video_player: ^2.6.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
