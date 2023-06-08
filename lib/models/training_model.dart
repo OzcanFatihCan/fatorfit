@@ -7,5 +7,7 @@ class TrainingModel {
 class TrainingDetailModel {
   String? programName;
   int? target;
-  TrainingDetailModel({this.programName, this.target});
+  double progresValue;
+
+  TrainingDetailModel({this.programName, this.target, this.progresValue = 0});
 }

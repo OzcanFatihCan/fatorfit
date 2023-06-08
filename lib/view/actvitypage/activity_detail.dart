@@ -40,9 +40,11 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
     } else {
       await _videoPlayerController.play();
     }
-    setState(() {
-      _isVideoPlaying = !_isVideoPlaying;
-    });
+    setState(
+      () {
+        _isVideoPlaying = !_isVideoPlaying;
+      },
+    );
   }
 
   @override
@@ -120,51 +122,89 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                   ),
                 ),
               ),
-              Card(
-                shape: const RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+              Expanded(
+                flex: 1,
+                child: Card(
+                  shape: const RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
                   ),
-                ),
-                color: Colors.transparent,
-                child: Center(
-                  child: Text(
-                    activity.name ?? '',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                  color: Colors.transparent,
+                  child: Center(
+                    child: Text(
+                      activity.name ?? '',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 230),
-              ElevatedButton(
-                onPressed: () {
-                  trainingBloc.addToTraining(activity);
-                  Navigator.pop(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 44.0),
-                  backgroundColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.circular(14.0),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    "Programıma Ekle",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
+              const SizedBox(height: 5),
+              Expanded(
+                flex: 6,
+                child: SizedBox(
+                  height: 250,
+                  child: Card(
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    color: Colors.transparent,
+                    child: SingleChildScrollView(
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(
+                              MediaQuery.of(context).size.height * 0.05),
+                          child: Text(
+                            activity.info ?? '',
+                            style: TextStyle(
+                                fontSize: 23.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
+              const SizedBox(height: 5),
+              Expanded(
+                flex: 2,
+                child: ElevatedButton(
+                  onPressed: () {
+                    trainingBloc.addToTraining(activity);
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 44.0),
+                    backgroundColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(14.0),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Programıma Ekle",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
             ],
           ),
         ),

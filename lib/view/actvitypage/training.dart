@@ -5,7 +5,7 @@ import '../../models/activity_model.dart';
 import '../../theme/themecolor.dart';
 
 class TrainingPage extends StatefulWidget {
-  const TrainingPage({Key? key});
+  const TrainingPage({super.key});
 
   @override
   State<TrainingPage> createState() => _TrainingPageState();
@@ -14,7 +14,7 @@ class TrainingPage extends StatefulWidget {
 class _TrainingPageState extends State<TrainingPage> {
   Map<String, dynamic> selectedOptions = {};
 
-  List<String> SetRepetitionList = [
+  List<String> setRepetitionList = [
     "2 * 5",
     "2 * 8",
     "2 * 10",
@@ -34,9 +34,9 @@ class _TrainingPageState extends State<TrainingPage> {
     "5 * 15",
   ];
 
-  List<int> OnlyMinuteList = [20, 30, 40, 50, 60];
+  List<int> onlyMinuteList = [20, 30, 40, 50, 60];
 
-  List<String> SetSecondList = [
+  List<String> setSecondList = [
     "2 * 30",
     "2 * 60",
     "3 * 30",
@@ -87,10 +87,12 @@ class _TrainingPageState extends State<TrainingPage> {
             ),
             TextButton(
               onPressed: () {
-                setState(() {
-                  selectedOptions.remove(activity.name);
-                  Navigator.of(context).pop();
-                });
+                setState(
+                  () {
+                    selectedOptions.remove(activity.name);
+                    Navigator.of(context).pop();
+                  },
+                );
               },
               child: const Text('Kapat'),
             ),
@@ -109,59 +111,83 @@ class _TrainingPageState extends State<TrainingPage> {
         activityName == 'Push-up - Şınav') {
       return ListView(
         shrinkWrap: true,
-        children: SetRepetitionList.map((repetition) {
-          var parts = repetition.split(' * ');
-          int value1 = int.parse(parts[0].trim());
-          int value2 = int.parse(parts[1].trim());
-          int reptetionInt = value1 * value2;
-          return Card(
-            shape: const RoundedRectangleBorder(
-              side: BorderSide(color: Colors.black),
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            color: AppColors.appbarColor,
-            child: ListTile(
-              title: Text('${repetition} Set-Tekrar'),
-              onTap: () {
-                setState(() {
-                  selectedOptions[activityName!] = reptetionInt;
+        children: setRepetitionList.map(
+          (repetition) {
+            var parts = repetition.split(' * ');
+            int value1 = int.parse(parts[0].trim());
+            int value2 = int.parse(parts[1].trim());
+            int reptetionInt = value1 * value2;
+            return Card(
+              shape: const RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              color: AppColors.appbarColor,
+              child: ListTile(
+                title: Text(
+                  '$repetition Set-Tekrar',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  setState(
+                    () {
+                      selectedOptions[activityName!] = reptetionInt;
 
-                  print(selectedOptions);
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-          );
-        }).toList(),
+                      print(selectedOptions);
+                      Navigator.of(context).pop();
+                    },
+                  );
+                },
+              ),
+            );
+          },
+        ).toList(),
       );
     } else if (activityName == 'Elliptical Bike' ||
         activityName == 'Treadmill') {
       return ListView(
         shrinkWrap: true,
-        children: OnlyMinuteList.map((minute) {
-          return Card(
-            shape: const RoundedRectangleBorder(
-              side: BorderSide(color: Colors.black),
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            color: AppColors.appbarColor,
-            child: ListTile(
-              title: Text('$minute Dakika'),
-              onTap: () {
-                setState(() {
-                  selectedOptions[activityName!] = minute;
-                  print(selectedOptions);
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-          );
-        }).toList(),
+        children: onlyMinuteList.map(
+          (minute) {
+            return Card(
+              shape: const RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12),
+                ),
+              ),
+              color: AppColors.appbarColor,
+              child: ListTile(
+                title: Text(
+                  '$minute Dakika',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  setState(
+                    () {
+                      selectedOptions[activityName!] = minute;
+                      print(selectedOptions);
+                      Navigator.of(context).pop();
+                    },
+                  );
+                },
+              ),
+            );
+          },
+        ).toList(),
       );
     } else if (activityName == 'Battle-ropes' || activityName == 'Plank') {
       return ListView(
         shrinkWrap: true,
-        children: SetSecondList.map((second) {
+        children: setSecondList.map((second) {
           var parts = second.split(' * ');
           int value1 = int.parse(parts[0].trim());
           int value2 = int.parse(parts[1].trim());
@@ -169,11 +195,20 @@ class _TrainingPageState extends State<TrainingPage> {
           return Card(
             shape: const RoundedRectangleBorder(
               side: BorderSide(color: Colors.black),
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
+              ),
             ),
             color: AppColors.appbarColor,
             child: ListTile(
-              title: Text('$second Set-Saniye'),
+              title: Text(
+                '$second Set-Saniye',
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onTap: () {
                 setState(() {
                   selectedOptions[activityName!] = secondInt;
@@ -187,7 +222,7 @@ class _TrainingPageState extends State<TrainingPage> {
       );
     }
 
-    return const SizedBox(); // Default case, empty widget
+    return const SizedBox();
   }
 
   @override
@@ -292,17 +327,11 @@ class _TrainingPageState extends State<TrainingPage> {
                                     subtitle: Text(
                                         "Hedefiniz: ${selectedOptions[training.name] ?? ''}"),
                                     trailing: ElevatedButton(
-                                      child: const Text(
-                                        "Hedef",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 21.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
                                       style: ElevatedButton.styleFrom(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 12.0, horizontal: 15.0),
+                                          vertical: 12.0,
+                                          horizontal: 15.0,
+                                        ),
                                         backgroundColor: AppColors.appbarColor,
                                         shape: RoundedRectangleBorder(
                                           side: const BorderSide(
@@ -312,10 +341,20 @@ class _TrainingPageState extends State<TrainingPage> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        setState(() {
-                                          _showTrainingOptionDialog(training);
-                                        });
+                                        setState(
+                                          () {
+                                            _showTrainingOptionDialog(training);
+                                          },
+                                        );
                                       },
+                                      child: const Text(
+                                        "Hedef",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 21.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -354,14 +393,21 @@ class _TrainingPageState extends State<TrainingPage> {
                 },
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Expanded(
               flex: 1,
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.height * 0.65,
                 child: ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, 'detailtraining');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.bottomNavBarColor,
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.black87),
+                    ),
+                  ),
                   child: const Text(
                     "Programım",
                     style: TextStyle(
@@ -370,15 +416,6 @@ class _TrainingPageState extends State<TrainingPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.bottomNavBarColor,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Colors.black87),
-                    ),
-                  ),
-                  onPressed: () async {
-                    await Navigator.pushNamed(context, 'detailtraining');
-                  },
                 ),
               ),
             )

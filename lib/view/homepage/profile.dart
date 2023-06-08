@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           elevation: 0.00,
-          backgroundColor: Color.fromARGB(255, 22, 175, 196),
+          backgroundColor: const Color.fromARGB(255, 22, 175, 196),
         ),
         body: Stack(
           alignment: AlignmentDirectional.topCenter,
@@ -244,7 +244,10 @@ _buildTrainingGo(BuildContext context) {
         await Navigator.pushNamed(context, "detailtraining");
       },
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+        padding: const EdgeInsets.symmetric(
+          vertical: 8.0,
+          horizontal: 15.0,
+        ),
         side: const BorderSide(color: Colors.black),
         backgroundColor: AppColors.bottomNavBarColor,
       ),

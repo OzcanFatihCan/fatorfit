@@ -134,7 +134,8 @@ class AuthService {
   }
 
   //filtreli program ekleme fonksiyonu
-  Future<void> performSetOperation(Map<String, dynamic> programs) async {
+  Future<void> performSetOperation(Map<String, dynamic> programs,
+      {double progresValue = 0.0}) async {
     final currentUser = _firebaseAuth.currentUser;
     String currentDate = getCurrentDate();
 
@@ -149,9 +150,75 @@ class AuthService {
     try {
       // Eğer bugün için bir döküman yoksa, yeni bir döküman oluştur
       if (!currentDaySnapshot.exists) {
-        await currentDayDoc.set({
-          'day': currentDate,
-        });
+        await currentDayDoc.set(
+          {
+            'day': currentDate,
+          },
+        );
+        currentDaySnapshot = await currentDayDoc.get();
+      }
+      //Mevcut kullanıcı varlığı kontrolü
+      if (currentUser != null) {
+        DocumentReference userIdDoc =
+            currentDayDoc.collection("userBase").doc(currentUser.uid);
+        DocumentSnapshot userIdSnapshot = await userIdDoc.get();
+        if (!userIdSnapshot.exists) {
+          await userIdDoc.set(
+            {
+              'id': currentUser.uid,
+            },
+          );
+        }
+        //her program için bir döküman oluştur
+        for (var data in programs.entries) {
+          DocumentReference programNameDoc =
+              userIdDoc.collection("programs").doc(data.key);
+          DocumentSnapshot programNameSnapshot = await programNameDoc.get();
+          //Döküman varsa ilgili hedef ve yapılan değeri gir
+          if (programNameSnapshot.exists) {
+            await programNameDoc.set(
+              {
+                'target': data.value,
+                'progresValue': progresValue,
+              },
+            );
+          }
+          //Döküman yoksa program ismiyle oluştur yukarıdaki işlemi yap
+          await programNameDoc.set(
+            {
+              "programName": data.key,
+              "target": data.value,
+              "progresValue": progresValue,
+            },
+          );
+        }
+      }
+    } catch (e) {
+      print("Set etme sırasında bir sorun oluştu hata kodu ${e}");
+    }
+  }
+
+  //yapılan veriyi kaydetme
+  Future<void> progresSetOperation(Map<String, dynamic> progres) async {
+    final currentUser = _firebaseAuth.currentUser;
+    String currentDate = getCurrentDate();
+
+    // Training koleksiyonuna erişim
+    CollectionReference trainingCollection =
+        FirebaseFirestore.instance.collection("Training");
+
+    // Bugünün dökümanını al
+    DocumentReference currentDayDoc = trainingCollection.doc(currentDate);
+    DocumentSnapshot currentDaySnapshot = await currentDayDoc.get();
+
+    try {
+      // Eğer bugün için bir döküman yoksa, yeni bir döküman oluştur
+      if (!currentDaySnapshot.exists) {
+        await currentDayDoc.set(
+          {
+            'day': currentDate,
+          },
+        );
         currentDaySnapshot = await currentDayDoc.get();
       }
       if (currentUser != null) {
@@ -159,24 +226,32 @@ class AuthService {
             currentDayDoc.collection("userBase").doc(currentUser.uid);
         DocumentSnapshot userIdSnapshot = await userIdDoc.get();
         if (!userIdSnapshot.exists) {
-          await userIdDoc.set({
-            'id': currentUser.uid,
-          });
+          await userIdDoc.set(
+            {
+              'id': currentUser.uid,
+            },
+          );
         }
         //her program için bir döküman oluştur
-        for (var data in programs.entries) {
+        for (var data in progres.entries) {
           DocumentReference programNameDoc =
               userIdDoc.collection("programs").doc(data.key);
           DocumentSnapshot programNameSnapshot = await programNameDoc.get();
+          //Döküman varsa ilgili yapılan değeri kaydet
           if (programNameSnapshot.exists) {
-            await programNameDoc.set({
-              'target': data.value,
-            });
+            await programNameDoc.update(
+              {
+                'progresValue': data.value,
+              },
+            );
           }
-          await programNameDoc.set({
-            "programName": data.key,
-            "target": data.value,
-          });
+          //Döküman yoksa program ismiyle oluştur yukarıdaki işlemi yap
+          await programNameDoc.update(
+            {
+              "programName": data.key,
+              "progresValue": data.value,
+            },
+          );
         }
       }
     } catch (e) {
@@ -189,20 +264,22 @@ class AuthService {
     String currentDate = getCurrentDate();
     final currentUser = _firebaseAuth.currentUser;
     if (currentUser != null) {
-      final CollectionReference _trainingCollection = FirebaseFirestore.instance
+      final CollectionReference trainingCollection = FirebaseFirestore.instance
           .collection('Training')
           .doc(currentDate)
           .collection('userBase')
           .doc(currentUser.uid)
           .collection('programs');
-      QuerySnapshot dataSnapshot = await _trainingCollection.get();
-      List<TrainingDetailModel> programs = dataSnapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        return TrainingDetailModel(
-          programName: data['programName'] as String?,
-          target: data['target'] as int?,
-        );
-      }).toList();
+      QuerySnapshot dataSnapshot = await trainingCollection.get();
+      List<TrainingDetailModel> programs = dataSnapshot.docs.map(
+        (doc) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+          return TrainingDetailModel(
+              programName: data['programName'] as String?,
+              target: data['target'] as int?,
+              progresValue: data['progresValue'] as double);
+        },
+      ).toList();
       return programs;
     }
     return Future.value(null);
@@ -222,5 +299,54 @@ class AuthService {
           .doc(programName);
       await programRef.delete();
     }
+  }
+
+  //gelişim geçmiş fonksiyonu
+  Future<Map<String, List<TrainingDetailModel>>>
+      getAllDatesAndUserPrograms() async {
+    final currentUser = _firebaseAuth.currentUser;
+    final CollectionReference trainingCollection =
+        FirebaseFirestore.instance.collection('Training');
+    QuerySnapshot snapshot = await trainingCollection.get();
+    Map<String, List<TrainingDetailModel>> datesAndPrograms = {};
+
+    if (snapshot.docs.isNotEmpty) {
+      for (QueryDocumentSnapshot doc in snapshot.docs) {
+        String date = doc.id;
+        final DocumentReference userProgramRef = trainingCollection
+            .doc(date)
+            .collection('userBase')
+            .doc(currentUser?.uid);
+
+        DocumentSnapshot userProgramSnapshot = await userProgramRef.get();
+
+        if (userProgramSnapshot.exists) {
+          List<TrainingDetailModel> programs = [];
+
+          QuerySnapshot programSnapshot =
+              await userProgramRef.collection('programs').get();
+          if (programSnapshot.docs.isNotEmpty) {
+            for (QueryDocumentSnapshot programDoc in programSnapshot.docs) {
+              Map<String, dynamic>? programData =
+                  programDoc.data() as Map<String, dynamic>?;
+              if (programData != null) {
+                double? progresValue = programData['progresValue'] as double?;
+                if (progresValue != null) {
+                  TrainingDetailModel program = TrainingDetailModel(
+                    programName: programData['programName'] as String?,
+                    target: programData['target'] as int?,
+                    progresValue: progresValue,
+                  );
+                  programs.add(program);
+                }
+              }
+            }
+          }
+          print(programs);
+          datesAndPrograms[date] = programs;
+        }
+      }
+    }
+    return datesAndPrograms;
   }
 }

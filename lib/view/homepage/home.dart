@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _page = 0;
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  GlobalKey<CurvedNavigationBarState> bottomNavigationKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final List<String> titles = [
@@ -28,43 +28,37 @@ class _HomePageState extends State<HomePage> {
     ];
 
     final List<Widget> images = [
-      Container(
-        child: const FrostedGlassBox(
-          theWidth: 200.0,
-          theHeight: 200.0,
-          theChild: Text(
-            'AKTIVITE',
-            style: TextStyle(
-                color: AppColors.textHome,
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold),
-          ),
+      const FrostedGlassBox(
+        theWidth: 200.0,
+        theHeight: 200.0,
+        theChild: Text(
+          'AKTIVITE',
+          style: TextStyle(
+              color: AppColors.textHome,
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold),
         ),
       ),
-      Container(
-        child: const FrostedGlassBox(
-          theWidth: 200.0,
-          theHeight: 200.0,
-          theChild: Text(
-            'DIYET',
-            style: TextStyle(
-                color: AppColors.textHome,
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold),
-          ),
+      const FrostedGlassBox(
+        theWidth: 200.0,
+        theHeight: 200.0,
+        theChild: Text(
+          'DIYET',
+          style: TextStyle(
+              color: AppColors.textHome,
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold),
         ),
       ),
-      Container(
-        child: const FrostedGlassBox(
-          theWidth: 200.0,
-          theHeight: 200.0,
-          theChild: Text(
-            'GELISIM',
-            style: TextStyle(
-                color: AppColors.textHome,
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold),
-          ),
+      const FrostedGlassBox(
+        theWidth: 200.0,
+        theHeight: 200.0,
+        theChild: Text(
+          'GELISIM',
+          style: TextStyle(
+              color: AppColors.textHome,
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold),
         ),
       ),
     ];
@@ -83,26 +77,27 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 flex: 7,
                 child: VerticalCardPager(
-                    titles: titles, // required
-                    images: images, // required
-                    textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold), // optional
-                    onPageChanged: (page) {
-                      // optional
-                    },
-                    onSelectedItem: (index) async {
-                      if (index == 0) {
-                        await Navigator.pushNamed(context, "aktivity");
-                      } else if (index == 1) {
-                        await Navigator.pushNamed(context, "diet");
-                      } else {
-                        await Navigator.pushNamed(context, "progress");
-                      }
-                    },
-                    initialPage: 1, // optional
-                    align: ALIGN.CENTER // optional
-                    ),
+                  titles: titles, // required
+                  images: images, // required
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ), // optional
+                  onPageChanged: (page) {
+                    // optional
+                  },
+                  onSelectedItem: (index) async {
+                    if (index == 0) {
+                      await Navigator.pushNamed(context, "aktivity");
+                    } else if (index == 1) {
+                      await Navigator.pushNamed(context, "diet");
+                    } else {
+                      await Navigator.pushNamed(context, "progress");
+                    }
+                  },
+                  initialPage: 1, // optional
+                  align: ALIGN.CENTER, // optional
+                ),
               ),
             ],
           ),
@@ -141,7 +136,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     return CurvedNavigationBar(
-      key: _bottomNavigationKey,
+      key: bottomNavigationKey,
       index: 0,
       height: 60.0,
       items: const <Widget>[

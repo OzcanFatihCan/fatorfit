@@ -15,6 +15,7 @@ import 'view/loginpage/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'view/progresspage/progress.dart';
+import 'view/progresspage/progress_history.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +43,7 @@ void main() async {
           "detailaktivity": (context) => const ActivityDetailPage(),
           "training": (context) => const TrainingPage(),
           "detailtraining": (context) => const TrainingDetailPage(),
+          "progresshistory": (context) => const ProgressHistoryPage(),
         },
       ),
     ),

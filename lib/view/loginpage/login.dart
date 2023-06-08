@@ -1,6 +1,6 @@
 import 'package:fatorfit/services/auth_service.dart';
 import 'package:fatorfit/theme/themecolor.dart';
-import 'package:fatorfit/view/loginpage/alternativeLogin.dart';
+import 'package:fatorfit/view/loginpage/alternative_login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

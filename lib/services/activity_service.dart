@@ -7,14 +7,17 @@ class ActivityService {
 
   Future<List<ActivityType>> getAll() async {
     QuerySnapshot snapshot = await _activityCollection.get();
-    List<ActivityType> activities = snapshot.docs.map((doc) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      return ActivityType(
-        aid: data['aid'] as int?,
-        name: data['name'] as String?,
-        imageUrl: data['imageUrl'] as String?,
-      );
-    }).toList();
+    List<ActivityType> activities = snapshot.docs.map(
+      (doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return ActivityType(
+          aid: data['aid'] as int?,
+          name: data['name'] as String?,
+          imageUrl: data['imageUrl'] as String?,
+          info: data['info'] as String?,
+        );
+      },
+    ).toList();
 
     return activities;
   }

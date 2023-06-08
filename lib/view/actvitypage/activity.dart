@@ -1,12 +1,7 @@
 import 'package:fatorfit/models/activity_model.dart';
-import 'package:fatorfit/models/training_model.dart';
-import 'package:fatorfit/services/activity_service.dart';
 import 'package:fatorfit/theme/themecolor.dart';
 import 'package:flutter/material.dart';
-
 import '../../blocs/activity_bloc.dart';
-import '../../blocs/training_bloc.dart';
-import 'activity_detail.dart';
 
 class AktivityPage extends StatefulWidget {
   const AktivityPage({super.key});
@@ -39,42 +34,41 @@ class _AktivityPageState extends State<AktivityPage> {
         ),
       ),
       child: Scaffold(
-          appBar: AppBar(
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(color: AppColors.appbarColor),
-            ),
-            title: const Text(
-              "Hareketler",
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+        appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(color: AppColors.appbarColor),
+          ),
+          title: const Text(
+            "Hareketler",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: Colors.transparent,
-          body: Column(
-            children: [
-              Expanded(
-                flex: 9,
-                child: _buildActivityList(),
-              ),
-              SizedBox(
-                height: 7,
-              ),
-              Expanded(
-                flex: 1,
-                child: _buildTrainingGo(),
-              )
-            ],
-          )),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        body: Column(
+          children: [
+            Expanded(
+              flex: 9,
+              child: _buildActivityList(),
+            ),
+            const SizedBox(height: 7),
+            Expanded(
+              flex: 1,
+              child: _buildTrainingGo(),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -114,9 +108,10 @@ class _AktivityPageState extends State<AktivityPage> {
                         child: Text(
                           activity.name ?? '',
                           style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 23,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.black,
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -128,13 +123,13 @@ class _AktivityPageState extends State<AktivityPage> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         }
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
 
   _buildTrainingGo() {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.height * 0.65,
       child: ElevatedButton(
         onPressed: () async {
@@ -154,9 +149,3 @@ class _AktivityPageState extends State<AktivityPage> {
     );
   }
 }
-
-
-
-
-//235, 63, 183, 219
-//9c9791

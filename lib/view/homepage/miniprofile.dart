@@ -18,7 +18,6 @@ enum GenderSelection {
 }
 
 class _MiniProfilePageState extends State<MiniProfilePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   GenderSelection _selection = GenderSelection.female;
   final _userController = TextEditingController();
   final _heightController = TextEditingController();
@@ -47,35 +46,42 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
         SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.05,
-                left: 38,
-                right: 38),
-            child: Column(children: [
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                "Profile Hoşgeldiniz",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+              top: MediaQuery.of(context).size.height * 0.05,
+              left: 38,
+              right: 38,
+            ),
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                const Text(
+                  "Profile Hoşgeldiniz",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              _buildName(_userController),
-              const SizedBox(height: 15),
-              _buildHeight(_heightController),
-              const SizedBox(height: 15),
-              _buildWeight(_weightController),
-              const SizedBox(height: 15),
-              _buildAge(_ageController),
-              const SizedBox(height: 15),
-              _buildGender(),
-              const SizedBox(height: 15),
-              _buildSaveButton(context, _ageController, _userController,
-                  _heightController, _weightController, _selection)
-            ]),
+                const SizedBox(height: 40),
+                _buildName(_userController),
+                const SizedBox(height: 15),
+                _buildHeight(_heightController),
+                const SizedBox(height: 15),
+                _buildWeight(_weightController),
+                const SizedBox(height: 15),
+                _buildAge(_ageController),
+                const SizedBox(height: 15),
+                _buildGender(),
+                const SizedBox(height: 15),
+                _buildSaveButton(
+                  context,
+                  _ageController,
+                  _userController,
+                  _heightController,
+                  _weightController,
+                  _selection,
+                )
+              ],
+            ),
           ),
         )
       ],
@@ -89,7 +95,10 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
         const Text(
           "Cinsiyet:",
           style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
         ),
         Expanded(
           flex: 1,
@@ -106,9 +115,11 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
             value: GenderSelection.female,
             groupValue: _selection,
             onChanged: (GenderSelection? value) {
-              setState(() {
-                _selection = value!;
-              });
+              setState(
+                () {
+                  _selection = value!;
+                },
+              );
             },
           ),
         ),
@@ -127,9 +138,11 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
             value: GenderSelection.male,
             groupValue: _selection,
             onChanged: (GenderSelection? value) {
-              setState(() {
-                _selection = value!;
-              });
+              setState(
+                () {
+                  _selection = value!;
+                },
+              );
             },
           ),
         ),
@@ -139,19 +152,19 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
 
   _buildSaveButton(
     BuildContext context,
-    TextEditingController _ageController,
-    TextEditingController _userController,
-    TextEditingController _heightController,
-    TextEditingController _weightController,
-    GenderSelection _selection,
+    TextEditingController ageController,
+    TextEditingController userController,
+    TextEditingController heightController,
+    TextEditingController weightController,
+    GenderSelection selection,
   ) {
     final authService = Provider.of<AuthService>(context);
     final mystream = authService.user;
-    final age = _ageController.text;
-    final name = _userController.text;
-    final height = _heightController.text;
-    final weight = _weightController.text;
-    final gender = _selection == GenderSelection.male ? "erkek" : "kadın";
+    final age = ageController.text;
+    final name = userController.text;
+    final height = heightController.text;
+    final weight = weightController.text;
+    final gender = selection == GenderSelection.male ? "erkek" : "kadın";
 
     return Center(
       child: Row(
@@ -187,7 +200,7 @@ class _MiniProfilePageState extends State<MiniProfilePage> {
               ),
             ),
           ),
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
           CircleAvatar(
             radius: 30,
             backgroundColor: Colors.black87,
@@ -211,12 +224,13 @@ _buildName(userController) {
   return TextField(
     controller: userController,
     decoration: InputDecoration(
-        fillColor: AppColors.textFieldColor,
-        filled: true,
-        hintText: 'Adınız - Soyadınız',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        )),
+      fillColor: AppColors.textFieldColor,
+      filled: true,
+      hintText: 'Adınız - Soyadınız',
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+    ),
   );
 }
 
@@ -228,12 +242,13 @@ _buildHeight(heightController) {
       FilteringTextInputFormatter.digitsOnly,
     ],
     decoration: InputDecoration(
-        fillColor: AppColors.textFieldColor,
-        filled: true,
-        hintText: 'Boyunuz',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        )),
+      fillColor: AppColors.textFieldColor,
+      filled: true,
+      hintText: 'Boyunuz',
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+    ),
   );
 }
 
@@ -241,12 +256,13 @@ _buildWeight(weightController) {
   return TextField(
     controller: weightController,
     decoration: InputDecoration(
-        fillColor: AppColors.textFieldColor,
-        filled: true,
-        hintText: 'Kilonuz',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        )),
+      fillColor: AppColors.textFieldColor,
+      filled: true,
+      hintText: 'Kilonuz',
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+    ),
   );
 }
 
@@ -254,11 +270,12 @@ _buildAge(ageController) {
   return TextField(
     controller: ageController,
     decoration: InputDecoration(
-        fillColor: AppColors.textFieldColor,
-        filled: true,
-        hintText: 'Yaşınız',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        )),
+      fillColor: AppColors.textFieldColor,
+      filled: true,
+      hintText: 'Yaşınız',
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+    ),
   );
 }

@@ -97,9 +97,10 @@ _buildProgramsList() {
                         title: Text(
                           program.programName ?? '',
                           style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 23,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.black,
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         trailing: Text(
                           "Hedefiniz: ${program.target.toString()}",
@@ -135,9 +136,7 @@ _buildProgramsList() {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Text("Bugünkü hedefinizi kaydetmediniz!"),
-            SizedBox(
-              height: 5,
-            ),
+            SizedBox(height: 5),
             CircularProgressIndicator()
           ],
         ),

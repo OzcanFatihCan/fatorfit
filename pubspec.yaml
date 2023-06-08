@@ -45,9 +45,16 @@ dependencies:
   sliding_up_panel2: ^3.3.0+1
   sliding_up_panel: ^2.0.0+1
   video_player: ^2.6.1
+  percent_indicator: ^4.2.3
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+ 
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
