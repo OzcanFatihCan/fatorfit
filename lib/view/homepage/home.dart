@@ -166,9 +166,34 @@ class _HomePageState extends State<HomePage> {
         if (_page == 1) {
           await _showModalBottomSheet(context);
         } else if (_page == 2) {
-          await Future.delayed(const Duration(milliseconds: 400));
-          await authService.signOut();
-          await authService.signOutWithGoogle();
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: const RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(25),
+                ),
+              ),
+              title: const Text('Çıkış'),
+              content: const Text('Çıkış yapmak istiyor musunuz?'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Hayır'),
+                  child: const Text('Hayır'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    await Future.delayed(const Duration(milliseconds: 400));
+                    Navigator.pop(context, 'Evet');
+                    await authService.signOut();
+                    await authService.signOutWithGoogle();
+                  },
+                  child: const Text('Evet'),
+                ),
+              ],
+            ),
+          );
         }
       },
       letIndexChange: (index) => true,

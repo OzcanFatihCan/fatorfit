@@ -123,7 +123,7 @@ buildAccountId(emailController) {
     decoration: InputDecoration(
       fillColor: AppColors.textFieldColor,
       filled: true,
-      hintText: 'Kullanıcı Adı veya E-Mail',
+      hintText: 'E-Mail',
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(25),
       ),
@@ -150,13 +150,13 @@ buildAccountPassword(passwordController) {
 //giriş yap
 buildSignIntoFF(
   BuildContext context,
-  emailController,
-  passwordController,
+  TextEditingController emailController,
+  TextEditingController passwordController,
 ) {
   final authService = Provider.of<AuthService>(context);
 
   return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       const Text(
         "Giriş Yap",
@@ -191,6 +191,7 @@ buildSignUp(BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
+      /*
       TextButton(
         onPressed: () => {},
         child: const Text(
@@ -201,7 +202,7 @@ buildSignUp(BuildContext context) {
             color: Color.fromRGBO(89, 191, 231, 1),
           ),
         ),
-      ),
+      ),*/
       Center(
         child: TextButton(
           onPressed: () => {

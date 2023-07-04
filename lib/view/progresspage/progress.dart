@@ -122,7 +122,6 @@ class _ProgressPageState extends State<ProgressPage> {
                 child: _buildButton(),
               ),
             ),
-            const SizedBox(height: 10),
           ],
         ),
       ),

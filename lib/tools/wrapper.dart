@@ -17,7 +17,6 @@ class Wrapper extends StatelessWidget {
         if (user != null) {
           final uid = user.userId;
           final email = user.userMail;
-          print("mail: ${email}, id: ${uid}");
         }
       },
     );
@@ -28,6 +27,7 @@ class Wrapper extends StatelessWidget {
           final AppUser? user = snapshot.data;
           if (user == null) {
             // Kullanıcı giriş yapmadı, LoginPage açılacak
+
             return const LoginPage();
           } else {
             // Giriş başarılı HomePage, açılacak.
@@ -36,9 +36,10 @@ class Wrapper extends StatelessWidget {
         } else if (snapshot.hasError) {
           // Giriş yaparken bir hata oluştu
           Future.delayed(const Duration(milliseconds: 50), () {
+            final error = snapshot.error.toString();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: const Text('Bilgilerinizi kontrol ediniz.'),
+                content: Text('Bilgilerinizi kontrol ediniz. Hata: $error'),
               ),
             );
           });
