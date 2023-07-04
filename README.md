@@ -1,16 +1,39 @@
 # fatorfit
 
-A new Flutter project.
+Merhaba,
 
-## Getting Started
+Bu proje **Flutter Dart** kullanılarak geliştirilmiştir. Giriş, veri tabanı gibi servis işlemleri için **Firebase** kullanılmıştır.
 
-This project is a starting point for a Flutter application.
+### Projenin Amaçları:
+- [x] Kullanıcılar kendine özel egzersiz programı oluşturabilir.
+- [x] Oluşturulan bu programa göre günlük ilerlemeler kaydedilebilir.
+- [x] Geçmişte oluşturulmuş programlar ve bu programın ilerlermeleri görüntülenebilir.
+- [x] Kullanıcılar egzersizlerle alakalı yazı ve video şeklinde bilgi alabilir.
+- [x] Kişiye özel profil verileri oluşturulabilir, güncellenebilir.
+- [ ] Günlük tüketilen besinler sepete eklenerek, gün içerisinde yakılması gereken kalori hesaplanabilir.(Yapımı tamamlanmadı)
 
-A few resources to get you started if this is your first Flutter project:
+Kısaca bu program kullanıcıların spor ve kalori takip süreçlerini kolaylıkla yönetebilmelerini sağlar ve onlara sağlıklı yaşam hedeflerine ulaşmada yardımcı olmayı amaçlamaktadır. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+--------------------------------------------------------------------------------
+Hello,
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project has been developed using Flutter Dart. Firebase has been used for services like authentication and database.
+
+### Project Objectives:
+- [x] Users can create their own customized exercise programs.
+- [x] Daily progress can be recorded based on the created program.
+- [x] Previously created programs and their progress can be viewed.
+- [x] Users can access information related to exercises in the form of text and video.
+- [x] Personal profile data can be created and updated.
+- [ ] Daily consumed foods can be added to a basket, and the required calorie burn throughout the day can be calculated. (Not yet completed)
+
+In summary, this program allows users to easily manage their fitness and calorie tracking processes and aims to assist them in achieving their healthy lifestyle goals.
+
+
+https://github.com/OzcanFatihCan/fatorfit/assets/93872480/74d67552-4246-4a65-9814-be39795cfe89
+
+## Geliştirme sırasında yararlanılan kaynaklar:
+
+- [Flutter Dökümantasyonu](https://docs.flutter.dev/)
+- [Kullanılan Paketler](https://pub.dev/)
+- [Firebase Dökümantasyonu](https://firebase.google.com/docs)
