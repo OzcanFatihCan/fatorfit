@@ -30,7 +30,9 @@ This project has been developed using Flutter Dart. Firebase has been used for s
 In summary, this program allows users to easily manage their fitness and calorie tracking processes and aims to assist them in achieving their healthy lifestyle goals.
 
 
-https://github.com/OzcanFatihCan/fatorfit/assets/93872480/74d67552-4246-4a65-9814-be39795cfe89
+
+https://github.com/OzcanFatihCan/fatorfit/assets/93872480/9664dc2d-d4e9-4845-a49c-e90469cf4925
+
 
 ## Geliştirme sırasında yararlanılan kaynaklar:
 
